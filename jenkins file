@@ -18,7 +18,9 @@ pipeline{
 
     stage('Deploy to tomcat'){
         steps{
-            deploy adapters: [tomcat9(credentialsId: 'c25e566a-004c-4642-95de-2e1002187cd3', path: '', url: 'http://13.235.115.209:8080/')], contextPath: null, war: '**/*.war'
+            sshagent(['Tomcat-10']) {
+    sh "scp deploying/target/devopsWab.war ubuntu@13.201.125.73:/opt/tomcat-10/webapps"
+}
         }
 
     }
